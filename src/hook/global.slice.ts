@@ -4,12 +4,12 @@ import { RootState } from "./store";
 
 interface globalState {
    isLogin: boolean;
-   username: string;
+   admin: string;
 }
 
 const initialState: globalState = {
    isLogin: false,
-   username: "",
+   admin: "",
 };
 
 export const globalSlice = createSlice({
@@ -17,21 +17,19 @@ export const globalSlice = createSlice({
    initialState,
    reducers: {
       setUser: (state, action) => {
-         console.log(action.payload);
-
-         if (action.payload === null) {
+         if (action.payload.token === null) {
             localStorage.removeItem("access_token");
          }
-         if (action.payload) {
+         if (action.payload.token) {
             localStorage.setItem("access_token", action.payload.token);
-            localStorage.setItem("username", action.payload?.username);
             state.isLogin = true;
-            state.username = action.payload?.username;
          }
+         state.admin = action.payload.username;
       },
       logout: (state) => {
          localStorage.removeItem("access_token");
          state.isLogin = false;
+         state.admin = "";
       },
    },
 });
@@ -40,6 +38,6 @@ export const { setUser, logout } = globalSlice.actions;
 
 // Export Values
 export const selectIsLogin = (state: RootState) => state.global.isLogin;
-export const selectUser = (state: RootState) => state.global.username;
+export const selectUser = (state: RootState) => state.global.admin;
 
 export default globalSlice.reducer;

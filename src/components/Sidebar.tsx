@@ -12,7 +12,9 @@ const Sidebar = () => {
    const [select, setSelect] = useState("Dashboard");
    const dispatch = useDispatch();
    const router = useRouter();
-   const username = useAppSelector(selectUser);
+   const user = useAppSelector(selectUser);
+   console.log(user);
+
    const handleLogout = () => {
       dispatch(logout());
       router.push("sign-in");
@@ -56,9 +58,7 @@ const Sidebar = () => {
             </div>
          </div>
          <div className="flex justify-center flex-col items-center gap-3">
-            <h1 className="text-slate-400">
-               Hi, {username.toLocaleUpperCase()}
-            </h1>
+            <h1 className="text-slate-400">Hi, {user?.toLocaleUpperCase()}</h1>
             <Button
                variant="ghost"
                color="danger"

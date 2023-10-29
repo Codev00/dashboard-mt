@@ -53,10 +53,10 @@ const ListMovie = () => {
    }, []);
 
    return (
-      <div className="min-w-[600px] h-full">
+      <div className="w-[580px] h-[600px]">
          <Table
             isStriped
-            aria-label="Example table with custom cells client side sorting async pagination "
+            aria-label="Example empty table with custom cells client side sorting async pagination "
             color="secondary"
             isHeaderSticky
             classNames={{
@@ -79,7 +79,7 @@ const ListMovie = () => {
          >
             <TableHeader columns={columns}>
                {(column) => (
-                  <TableColumn key={column.id} align="center">
+                  <TableColumn key={column.id} align="start">
                      {column.title}
                   </TableColumn>
                )}
