@@ -44,7 +44,7 @@ const Detail = () => {
                <div className="flex flex-col gap-3">
                   <h1 className="text-4xl font-bold">{movie?.name}</h1>
                   <div className="flex gap-2">
-                     {movie?.genres.map((genres) => (
+                     {movie?.genres.map((genres: any) => (
                         <Chip
                            key={genres?.id}
                            color="success"
@@ -70,7 +70,7 @@ const Detail = () => {
             <div className="flex flex-col gap-3">
                <h1 className="text-xl font-bold">Video</h1>
                <div className="flex gap-5 flex-nowrap  ">
-                  {movie?.videos.map((video) => (
+                  {movie?.videos.map((video: any) => (
                      <Image
                         src={tmdbConfig.youtubeImg(video?.key)}
                         width={300}

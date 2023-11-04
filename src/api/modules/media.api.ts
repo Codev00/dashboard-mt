@@ -1,3 +1,4 @@
+import { MovieType } from "@/types/media.type";
 import publicClient from "../config/public.client";
 
 const mediaApi = {
@@ -35,7 +36,9 @@ const mediaApi = {
    },
    listMovie: async () => {
       try {
-         const res = await publicClient.get("/movie/list");
+         const res = await publicClient.get<MovieType[], MovieType[]>(
+            "/movie/list"
+         );
          return { res };
       } catch (error) {
          return { error };
@@ -43,7 +46,7 @@ const mediaApi = {
    },
    getMovie: async ({ mediaId }: any) => {
       try {
-         const res = await publicClient.get(`/movie/${mediaId}`);
+         const res = await publicClient.get(`/movie/get/${mediaId}`);
          return { res };
       } catch (error) {
          return { error };

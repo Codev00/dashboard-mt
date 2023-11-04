@@ -58,9 +58,9 @@ const ListMovie = () => {
             isStriped
             aria-label="Example empty table with custom cells client side sorting async pagination "
             color="secondary"
-            isHeaderSticky
             classNames={{
-               table: "min-h-[200px]",
+               base: "max-h-[600px] overflow-hidden",
+               table: "min-h-[600px]",
             }}
             bottomContent={
                <div className="flex w-full justify-center">
