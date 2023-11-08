@@ -1,6 +1,6 @@
 "use client";
-import AddMovie from "@/components/movie/AddMovie";
-import ListMovie from "@/components/movie/ListMovie";
+import AddMovie from "@/components/AddMovie";
+import ListMovie from "@/components/ListMovie";
 import React, { Suspense } from "react";
 
 const Movie = () => {

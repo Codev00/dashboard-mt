@@ -1,18 +1,12 @@
 import genresApi from "@/api/modules/genres.api";
 import mediaApi from "@/api/modules/media.api";
-import {
-   Button,
-   Chip,
-   Input,
-   Select,
-   SelectItem,
-   Textarea,
-} from "@nextui-org/react";
+import { GenreType } from "@/types/media.type";
+import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import React, { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const AddMovie = () => {
-   const [genres, setGenres] = useState<any>([]);
+   const [genres, setGenres] = useState<GenreType[]>([]);
    const [name, setName] = useState("");
    const [genre, setGenre] = useState<any>([]);
    const [backdrop, setBackdrop] = useState("");

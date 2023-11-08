@@ -3,7 +3,7 @@ import tmdbConfig from "@/api/config/tmdb.config";
 import mediaApi from "@/api/modules/media.api";
 import userApi from "@/api/modules/user.api";
 import UserList from "@/components/UserList";
-import { selectIsLogin, setUser } from "@/hook/global.slice";
+import { selectIsLogin, selectUser, setUser } from "@/hook/global.slice";
 import { MovieType } from "@/types/media.type";
 import { UserType } from "@/types/user.type";
 import { Image, Listbox, ListboxItem } from "@nextui-org/react";
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
    const dispatch = useDispatch();
+   const currentUser = useSelector(selectUser);
    const router = useRouter();
    const [movies, setMovies] = useState<MovieType[] | any>(null);
    const [users, setUsers] = useState<UserType[] | any>(null);
@@ -31,16 +32,8 @@ export default function Home() {
    }, [dispatch]);
 
    useLayoutEffect(() => {
-      const user = {
-         token: localStorage.getItem("access_token"),
-         username: localStorage.getItem("username"),
-      };
-      if (user.token) {
-         dispatch(setUser(user));
-      } else {
-         router.push("/sign-in");
-      }
-   }, []);
+      if (!currentUser) router.push("/sign-in");
+   }, [dispatch]);
 
    return (
       <main className="flex text-slate-200 p-5 flex-col gap-5">

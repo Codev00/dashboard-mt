@@ -5,7 +5,7 @@ const videoApi = {
       try {
          const res = await publicClient.post("/video/created", values);
          return { res };
-      } catch (error) {
+      } catch (error: any) {
          return { error };
       }
    },

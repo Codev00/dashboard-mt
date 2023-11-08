@@ -8,5 +8,6 @@ export type UserType = {
    email: string;
    verify: boolean;
    status: boolean;
+   createdAt: string;
    favorites: MovieType[];
 };

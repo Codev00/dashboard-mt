@@ -13,7 +13,6 @@ const Sidebar = () => {
    const dispatch = useDispatch();
    const router = useRouter();
    const user = useAppSelector(selectUser);
-   console.log(user);
 
    const handleLogout = () => {
       dispatch(logout());
@@ -54,6 +53,21 @@ const Sidebar = () => {
                >
                   <i className="fi fi-rr-clapperboard-play text-xl"></i>
                   <span>Movie</span>
+               </Link>
+            </div>
+            <div
+               className={`flex items-center  gap-2 w-full text-xl ml-5 hover:bg-violet-500 hover:rounded-tl-xl hover:rounded-bl-xl pl-4   transition-all duration-200 leading-[44px] ease-in-out cursor-pointer ${
+                  select === "Censorship" &&
+                  "bg-violet-500 rounded-tl-xl rounded-bl-xl font-bold"
+               }`}
+            >
+               <Link
+                  href={"/censorship"}
+                  className="w-full h-full flex items-center gap-2 leading-[44px]"
+                  onClick={() => setSelect("Censorship")}
+               >
+                  <i className="fi fi-rr-camera-movie text-xl"></i>
+                  <span>Censorship</span>
                </Link>
             </div>
          </div>

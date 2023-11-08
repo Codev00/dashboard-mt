@@ -1,6 +1,7 @@
 "use client";
 import tmdbConfig from "@/api/config/tmdb.config";
 import mediaApi from "@/api/modules/media.api";
+import ButtonDelete from "@/components/ButtonDelete";
 import { Button, Chip, Image } from "@nextui-org/react";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -22,13 +23,16 @@ const Detail = () => {
 
    return (
       <div className="flex w-full gap-3">
-         <div className="w-[60] text-white">
+         <div className="w-[60] h-full text-white flex flex-col gap-5 justify-center">
             <Button
                variant="ghost"
                color="warning"
                onClick={() => router.push(`/movie/${mediaId}/add`)}
             >
-               Add video
+               <i className="fi fi-rr-photo-video text-xl"></i> Add video
+            </Button>
+            <Button variant="ghost" color="danger">
+               <ButtonDelete id={mediaId} /> Delete
             </Button>
          </div>
          <div className="w-full bg-main px-20 pt-10 pb-3 flex flex-col gap-3">

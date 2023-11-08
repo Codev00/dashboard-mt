@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import adminApi from "@/api/modules/admin.api";
 import { setUser } from "@/hook/global.slice";
-import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({
    children,
