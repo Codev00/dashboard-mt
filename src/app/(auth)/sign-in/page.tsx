@@ -15,7 +15,7 @@ const SignIn = () => {
    const isLogin = useAppSelector((state: RootState) => state.global.isLogin);
 
    useLayoutEffect(() => {
-      if (isLogin || localStorage.getItem("access_token")) {
+      if (isLogin || sessionStorage.getItem("access_token")) {
          router.push("/");
       }
    });
@@ -34,7 +34,7 @@ const SignIn = () => {
       },
    });
    useEffect(() => {
-      if (isLogin || localStorage.getItem("access_token")) {
+      if (isLogin || sessionStorage.getItem("access_token")) {
          setTimeout(() => {
             router.push("/");
          }, 3000);

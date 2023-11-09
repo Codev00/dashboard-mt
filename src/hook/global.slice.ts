@@ -18,16 +18,16 @@ export const globalSlice = createSlice({
    reducers: {
       setUser: (state, action) => {
          if (action.payload.token === null) {
-            localStorage.removeItem("access_token");
+            sessionStorage.removeItem("access_token");
          }
          if (action.payload.token) {
-            localStorage.setItem("access_token", action.payload.token);
+            sessionStorage.setItem("access_token", action.payload.token);
             state.isLogin = true;
          }
          state.admin = action.payload.username;
       },
       logout: (state) => {
-         localStorage.removeItem("access_token");
+         sessionStorage.removeItem("access_token");
          state.isLogin = false;
          state.admin = "";
       },

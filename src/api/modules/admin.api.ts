@@ -6,7 +6,7 @@ const adminApi = {
       try {
          const res = await publicClient.post("/admin/signin", values);
          return { res };
-      } catch (error) {
+      } catch (error: any) {
          return { error };
       }
    },

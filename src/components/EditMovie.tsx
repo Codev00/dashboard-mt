@@ -6,6 +6,10 @@ import { useParams } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 const EditMovie = ({ data }: { data: MovieType }) => {
+   let genreInit = [];
+   data.genres.map((item) => {
+      return genreInit.push(item.title);
+   });
    const [genres, setGenres] = useState<GenreType[]>([]);
    const [name, setName] = useState<any>(data.name);
    const [genre, setGenre] = useState<any>(data.genres);
