@@ -33,7 +33,7 @@ export default function Home() {
 
    useLayoutEffect(() => {
       if (!currentUser) router.push("/sign-in");
-   }, [dispatch]);
+   }, []);
 
    return (
       <main className="flex text-slate-200 p-5 flex-col gap-5">

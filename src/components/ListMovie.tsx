@@ -7,6 +7,7 @@ import { MovieType } from "@/types/media.type";
 import {
    Chip,
    Image,
+   Input,
    Pagination,
    Spinner,
    Table,
@@ -32,17 +33,29 @@ const columns = [
 const ListMovie = () => {
    const router = useRouter();
    const [list, setList] = useState<MovieType[]>([]);
+   const [filterValue, setFilterValue] = useState("");
    const [isLoading, setLoading] = useState(true);
    const [page, setPage] = React.useState(1);
    const rowsPerPage = 3;
 
    const pages = Math.ceil(list.length / rowsPerPage);
-
+   const hasSearchFilter = Boolean(filterValue);
    // const items = React.useMemo(() => {
    //    const start = (page - 1) * rowsPerPage;
    //    const end = start + rowsPerPage;
    //    return list.slice(start, end);
    // }, [page, list]);
+   const filteredItems = React.useMemo(() => {
+      let filteredMovie = [...list];
+
+      if (hasSearchFilter) {
+         filteredMovie = filteredMovie.filter((movie) =>
+            movie.name.toLowerCase().includes(filterValue.toLowerCase())
+         );
+      }
+
+      return filteredMovie;
+   }, [list, filterValue]);
    useEffect(() => {
       (async () => {
          const { res, error } = await mediaApi.listMovie();
@@ -53,12 +66,28 @@ const ListMovie = () => {
          if (error) toast.error(error?.message);
       })();
    }, []);
-
+   const onSearchChange = React.useCallback((value: any) => {
+      if (value) {
+         setFilterValue(value);
+      } else {
+         setFilterValue("");
+      }
+   }, []);
+   const onClear = React.useCallback(() => {
+      setFilterValue("");
+   }, []);
    return (
-      <div className="w-[580px] h-[600px]">
+      <div className="w-full h-[600px] flex gap-6">
+         <Input
+            isClearable
+            className="w-[300px] sm:max-w-[44%] mb-5"
+            placeholder="Search by name..."
+            value={filterValue}
+            onClear={() => onClear()}
+            onValueChange={onSearchChange}
+            variant="underlined"
+         />
          <Table
-            isStriped
-            isHeaderSticky
             aria-label="Example empty table with custom cells client side sorting async pagination "
             color="secondary"
             radius="none"
@@ -94,18 +123,20 @@ const ListMovie = () => {
                isLoading={isLoading}
                loadingContent={<Spinner label="Loading..." />}
             >
-               {list.reverse().map((item, index) => (
+               {filteredItems.reverse().map((item, index) => (
                   <TableRow key={index}>
                      <TableCell>
                         <Image
                            src={tmdbConfig.posterPath(item?.poster_path)}
-                           width={100}
-                           height={200}
+                           width={200}
+                           height={300}
                            radius="none"
                         />
                      </TableCell>
                      <TableCell>
-                        <span>{item.name}</span>
+                        <span className="italic font-semibold text-xl">
+                           {item.name}
+                        </span>
                      </TableCell>
                      <TableCell>
                         <div className="relative flex items-center gap-2">

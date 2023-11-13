@@ -8,6 +8,7 @@ import { MovieType } from "@/types/media.type";
 import {
    Chip,
    Image,
+   Input,
    Pagination,
    Spinner,
    Table,
@@ -35,6 +36,8 @@ const Censorship = () => {
    const [isLoading, setLoading] = useState(true);
    const [page, setPage] = useState(1);
    const rowsPerPage = 3;
+   const [filterValue, setFilterValue] = useState("");
+   const hasSearchFilter = Boolean(filterValue);
 
    const pages = Math.ceil(list.length / rowsPerPage);
 
@@ -54,14 +57,44 @@ const Censorship = () => {
          if (error) toast.error(error?.message);
       })();
    }, []);
+   const filteredItems = React.useMemo(() => {
+      let filteredMovie = [...list];
 
+      if (hasSearchFilter) {
+         filteredMovie = filteredMovie.filter((movie) =>
+            movie.name.toLowerCase().includes(filterValue.toLowerCase())
+         );
+      }
+
+      return filteredMovie;
+   }, [list, filterValue]);
+   const onSearchChange = React.useCallback((value: any) => {
+      if (value) {
+         setFilterValue(value);
+      } else {
+         setFilterValue("");
+      }
+   }, []);
+   const onClear = React.useCallback(() => {
+      setFilterValue("");
+   }, []);
    return (
-      <div className="w-[580px] max-h-[600px]">
+      <div className="w-full h-[600px] flex gap-6">
+         <Input
+            isClearable
+            className="w-[300px] sm:max-w-[44%] mb-5"
+            placeholder="Search by name..."
+            value={filterValue}
+            onClear={() => onClear()}
+            onValueChange={onSearchChange}
+            variant="underlined"
+         />
          <Table
-            isHeaderSticky
-            isStriped
             aria-label="Example empty table with custom cells client side sorting async pagination "
             color="secondary"
+            radius="none"
+            layout="fixed"
+            shadow="lg"
             classNames={{
                base: "max-h-[600px] overflow-hidden",
                table: "min-h-[300px]",
@@ -93,13 +126,13 @@ const Censorship = () => {
                loadingContent={<Spinner label="Loading..." />}
                emptyContent={"No media to display."}
             >
-               {list.reverse().map((item, index) => (
+               {filteredItems.reverse().map((item, index) => (
                   <TableRow key={index}>
                      <TableCell>
                         <Image
                            src={tmdbConfig.posterPath(item?.poster_path)}
-                           width={100}
-                           height={200}
+                           width={200}
+                           height={300}
                            radius="none"
                         />
                      </TableCell>

@@ -2,7 +2,6 @@ import genresApi from "@/api/modules/genres.api";
 import mediaApi from "@/api/modules/media.api";
 import { GenreType, MovieType } from "@/types/media.type";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
-import { useParams } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 const EditMovie = ({ data }: { data: MovieType }) => {

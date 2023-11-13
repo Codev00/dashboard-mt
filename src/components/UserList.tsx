@@ -63,7 +63,9 @@ export default function UserList({ users }: { users: UserType[] | null }) {
                >
                   {(item) => (
                      <TableRow key={item?._id}>
-                        <TableCell>{item.displayName}</TableCell>
+                        <TableCell>
+                           <span className="text-xl">{item.displayName}</span>
+                        </TableCell>
                         <TableCell>
                            {item.status === true ? (
                               <Chip
@@ -76,7 +78,7 @@ export default function UserList({ users }: { users: UserType[] | null }) {
                            ) : (
                               <Chip
                                  variant="bordered"
-                                 color="default"
+                                 color="danger"
                                  radius="full"
                               >
                                  Offline

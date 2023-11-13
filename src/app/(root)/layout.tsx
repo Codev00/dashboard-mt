@@ -3,7 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import "../globals.css";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import adminApi from "@/api/modules/admin.api";
 import { setUser } from "@/hook/global.slice";
 
@@ -13,7 +13,7 @@ export default function DashboardLayout({
    children: React.ReactNode;
 }) {
    const dispatch = useDispatch();
-   useEffect(() => {
+   useLayoutEffect(() => {
       (async () => {
          const { res, error } = await adminApi.getInfo();
          if (res) dispatch(setUser(res));

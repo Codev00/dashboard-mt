@@ -14,11 +14,11 @@ const SignIn = () => {
    const router = useRouter();
    const isLogin = useAppSelector((state: RootState) => state.global.isLogin);
 
-   useLayoutEffect(() => {
-      if (isLogin || sessionStorage.getItem("access_token")) {
-         router.push("/");
-      }
-   });
+   // useLayoutEffect(() => {
+   //    if (sessionStorage.getItem("access_token")) {
+   //       router.push("/");
+   //    }
+   // }, []);
    const formData = useFormik({
       initialValues: {
          username: "",

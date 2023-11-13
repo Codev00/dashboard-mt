@@ -43,6 +43,7 @@ const Detail = () => {
                   width={200}
                   shadow="lg"
                   loading="lazy"
+                  radius="none"
                   isBlurred
                />
                <div className="flex flex-col gap-3">
