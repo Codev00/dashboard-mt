@@ -5,7 +5,7 @@ const genresApi = {
    getList: async () => {
       try {
          const res = await publicClient.get<GenreType[], GenreType[]>(
-            "/genre/list"
+            "/api/v1/genre/list"
          );
          return { res };
       } catch (error) {

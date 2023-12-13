@@ -5,7 +5,7 @@ const userApi = {
    listUser: async () => {
       try {
          const res = await publicClient.get<UserType[], UserType[]>(
-            "/user/list"
+            "/api/v1/user/list"
          );
          return { res };
       } catch (error) {

@@ -16,7 +16,7 @@ const mediaApi = {
       direction,
    }: any) => {
       try {
-         const res = await publicClient.post("/movie/created", {
+         const res = await publicClient.post("/api/v1/movie/created", {
             name,
             genres,
             backdrop_path,
@@ -49,7 +49,7 @@ const mediaApi = {
       direction,
    }: any) => {
       try {
-         const res = await publicClient.put(`/movie/edited/${id}`, {
+         const res = await publicClient.put(`/api/v1/movie/edited/${id}`, {
             name,
             genres,
             backdrop_path,
@@ -70,7 +70,7 @@ const mediaApi = {
    listMovie: async () => {
       try {
          const res = await publicClient.get<MovieType[], MovieType[]>(
-            "/movie/list"
+            "/api/v1/movie/list"
          );
          return { res };
       } catch (error: any) {
@@ -80,7 +80,7 @@ const mediaApi = {
    listCensorship: async () => {
       try {
          const res = await publicClient.get<MovieType[], MovieType[]>(
-            "/movie/censorship"
+            "/api/v1/movie/censorship"
          );
          return { res };
       } catch (error: any) {
@@ -100,7 +100,7 @@ const mediaApi = {
    getMovie: async ({ mediaId }: any) => {
       try {
          const res = await publicClient.get<MovieType, MovieType>(
-            `/movie/get/${mediaId}`
+            `/api/v1/movie/get/${mediaId}`
          );
          return { res };
       } catch (error: any) {
