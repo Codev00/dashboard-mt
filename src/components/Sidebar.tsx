@@ -1,19 +1,34 @@
 "use client";
-import { logout, selectIsLogin, selectUser } from "@/hook/global.slice";
+import mediaApi from "@/api/modules/media.api";
+import userApi from "@/api/modules/user.api";
+import {
+   logout,
+   selectIsActive,
+   selectIsLogin,
+   selectUser,
+   setActive,
+   setUser,
+} from "@/hook/global.slice";
 import { useAppSelector } from "@/hook/store";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const Sidebar = () => {
-   const [select, setSelect] = useState("Dashboard");
    const dispatch = useDispatch();
    const router = useRouter();
    const user = useAppSelector(selectUser);
+   const isActive = useSelector(selectIsActive);
+   const p = usePathname().split("/")[1];
 
+   useLayoutEffect(() => {
+      if (p === "") dispatch(setActive("Dashboard"));
+      if (p === "movie") dispatch(setActive("Movie"));
+      if (p === "censorship") dispatch(setActive("Censorship"));
+   }, [p]);
    const handleLogout = () => {
       dispatch(logout());
       router.push("sign-in");
@@ -26,48 +41,59 @@ const Sidebar = () => {
 
          <div className="w-full py-10 flex flex-col gap-5">
             <div
-               className={`flex items-center gap-2 w-full text-xl ml-5 hover:bg-violet-500 pl-4 transition-all duration-200  ease-in-out cursor-pointer hover:rounded-tl-xl hover:rounded-bl-xl ${
-                  select === "Dashboard" &&
-                  "bg-violet-500 rounded-tl-xl rounded-bl-xl font-bold"
+               className={`flex items-center gap-2 w-full text-xl ml-5 group pl-4 transition-all duration-200  ease-in-out cursor-pointer  ${
+                  isActive === "Dashboard" && " font-semibold"
                }`}
             >
                <Link
                   href={"/"}
                   className="w-full h-full flex items-center gap-2 leading-[44px]"
-                  onClick={() => setSelect("Dashboard")}
+                  onClick={() => {
+                     dispatch(setActive("Dashboard"));
+                  }}
                >
-                  <i className="fi fi-rr-home text-xl"></i>
-                  <span>Dashboard</span>
+                  <i
+                     className={`fi fi-rr-home text-xl group-hover:text-danger ${
+                        isActive === "Dashboard" && " text-danger"
+                     }`}
+                  ></i>
+                  <span className="group-hover:font-semibold">Dashboard</span>
                </Link>
             </div>
             <div
-               className={`flex items-center  gap-2 w-full text-xl ml-5 hover:bg-violet-500 hover:rounded-tl-xl hover:rounded-bl-xl pl-4   transition-all duration-200 leading-[44px] ease-in-out cursor-pointer ${
-                  select === "Movie" &&
-                  "bg-violet-500 rounded-tl-xl rounded-bl-xl font-bold"
+               className={`flex items-center  gap-2 w-full text-xl ml-5 group pl-4 transition-all duration-200 leading-[44px] ease-in-out cursor-pointer ${
+                  isActive === "Movie" && " font-semibold"
                }`}
             >
                <Link
                   href={"/movie"}
                   className="w-full h-full flex items-center gap-2 leading-[44px]"
-                  onClick={() => setSelect("Movie")}
+                  onClick={() => dispatch(setActive("Movie"))}
                >
-                  <i className="fi fi-rr-clapperboard-play text-xl"></i>
-                  <span>Movie</span>
+                  <i
+                     className={`fi fi-rr-clapperboard-play text-xl group-hover:text-danger ${
+                        isActive === "Movie" && " text-danger"
+                     }`}
+                  ></i>
+                  <span className="group-hover:font-semibold">Movie</span>
                </Link>
             </div>
             <div
-               className={`flex items-center  gap-2 w-full text-xl ml-5 hover:bg-violet-500 hover:rounded-tl-xl hover:rounded-bl-xl pl-4   transition-all duration-200 leading-[44px] ease-in-out cursor-pointer ${
-                  select === "Censorship" &&
-                  "bg-violet-500 rounded-tl-xl rounded-bl-xl font-bold"
+               className={`flex items-center  gap-2 w-full text-xl ml-5  pl-4 group transition-all duration-200 leading-[44px] ease-in-out cursor-pointer ${
+                  isActive === "Censorship" && " font-semibold"
                }`}
             >
                <Link
                   href={"/censorship"}
                   className="w-full h-full flex items-center gap-2 leading-[44px]"
-                  onClick={() => setSelect("Censorship")}
+                  onClick={() => dispatch(setActive("Censorship"))}
                >
-                  <i className="fi fi-rr-camera-movie text-xl"></i>
-                  <span>Censorship</span>
+                  <i
+                     className={`fi fi-rr-camera-movie text-xl group-hover:text-danger ${
+                        isActive === "Censorship" && " text-danger"
+                     }`}
+                  ></i>
+                  <span className="group-hover:font-semibold">Censorship</span>
                </Link>
             </div>
          </div>

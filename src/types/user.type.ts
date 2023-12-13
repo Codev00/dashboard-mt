@@ -10,4 +10,5 @@ export type UserType = {
    status: boolean;
    createdAt: string;
    favorites: MovieType[];
+   premium: boolean;
 };

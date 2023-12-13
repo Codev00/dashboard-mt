@@ -18,10 +18,11 @@ import dayjs from "dayjs";
 export default function UserList({ users }: { users: UserType[] | null }) {
    const [page, setPage] = React.useState(1);
    const [isLoading, setIsLoading] = React.useState(true);
-
+   const [data, setData] = useState<UserType[]>([]);
    useLayoutEffect(() => {
       if (users) {
          setIsLoading(false);
+         setData(users);
       }
    }, [users]);
 
@@ -29,7 +30,7 @@ export default function UserList({ users }: { users: UserType[] | null }) {
 
    return (
       <Suspense fallback={null}>
-         {users && (
+         {
             <Table
                aria-label="Example table with client side sorting"
                bottomContent={
@@ -37,7 +38,8 @@ export default function UserList({ users }: { users: UserType[] | null }) {
                      <div className="flex w-full justify-center">
                         <Button
                            isDisabled={isLoading}
-                           variant="flat"
+                           variant="ghost"
+                           color="warning"
                            onPress={() => setPage(page + 1)}
                         >
                            {isLoading && <Spinner color="white" size="sm" />}
@@ -57,7 +59,7 @@ export default function UserList({ users }: { users: UserType[] | null }) {
                   <TableColumn key="date">Created date</TableColumn>
                </TableHeader>
                <TableBody
-                  items={users}
+                  items={data}
                   isLoading={isLoading}
                   loadingContent={<Spinner label="Loading..." />}
                >
@@ -67,32 +69,28 @@ export default function UserList({ users }: { users: UserType[] | null }) {
                            <span className="text-xl">{item.displayName}</span>
                         </TableCell>
                         <TableCell>
-                           {item.status === true ? (
-                              <Chip
-                                 variant="bordered"
-                                 color="success"
-                                 radius="full"
-                              >
-                                 Online
+                           {item.premium === true ? (
+                              <Chip variant="dot" color="success" radius="full">
+                                 Premium
                               </Chip>
                            ) : (
                               <Chip
-                                 variant="bordered"
-                                 color="danger"
+                                 variant="dot"
+                                 color="secondary"
                                  radius="full"
                               >
-                                 Offline
+                                 Free
                               </Chip>
                            )}
                         </TableCell>
                         <TableCell>
-                           {dayjs(item.createdAt).format("YYYY-MM-DD")}
+                           {dayjs(item.createdAt).format("DD-MM-YYYY")}
                         </TableCell>
                      </TableRow>
                   )}
                </TableBody>
             </Table>
-         )}
+         }
       </Suspense>
    );
 }

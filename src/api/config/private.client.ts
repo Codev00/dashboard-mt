@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "cookies-next";
 import queryString from "query-string";
 
 const baseURL = "http://127.0.0.1:8000/api/v1/";
@@ -15,7 +16,7 @@ privateClient.interceptors.request.use(async (config: any) => {
       ...config,
       headers: {
          "Content-Type": "application/json",
-         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+         Authorization: `Bearer ${getCookie("access_token")}`,
       },
    };
 });

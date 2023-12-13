@@ -2,9 +2,10 @@
 import tmdbConfig from "@/api/config/tmdb.config";
 import mediaApi from "@/api/modules/media.api";
 import ButtonDelete from "@/components/ButtonDelete";
+import PlayModal from "@/components/PlayModal";
 import { Button, Chip, Image } from "@nextui-org/react";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const Detail = () => {
@@ -17,7 +18,6 @@ const Detail = () => {
          const { res, error } = await mediaApi.getMovie({ mediaId });
          if (res) setMovie(res);
          if (error) toast.error(error?.message);
-         console.log(res, movie);
       })();
    }, [mediaId]);
 
@@ -49,9 +49,9 @@ const Detail = () => {
                <div className="flex flex-col gap-3">
                   <h1 className="text-4xl font-bold">{movie?.name}</h1>
                   <div className="flex gap-2">
-                     {movie?.genres.map((genres: any) => (
+                     {movie?.genres.map((genres: any, index: number) => (
                         <Chip
-                           key={genres?.id}
+                           key={index}
                            color="success"
                            variant="bordered"
                            className="cursor-pointer"
@@ -75,14 +75,17 @@ const Detail = () => {
             <div className="flex flex-col gap-3">
                <h1 className="text-xl font-bold">Video</h1>
                <div className="flex gap-5 flex-nowrap  ">
-                  {movie?.videos.map((video: any) => (
-                     <Image
-                        src={tmdbConfig.youtubeImg(video?.key)}
-                        width={300}
-                        height={200}
-                        isZoomed
-                        className="cursor-pointer"
-                     />
+                  {movie?.videos.map((video: any, index: number) => (
+                     <PlayModal link={video?.key}>
+                        <Image
+                           key={index}
+                           src={tmdbConfig.youtubeImg(video?.key)}
+                           width={300}
+                           height={200}
+                           isZoomed
+                           className="cursor-pointer"
+                        />
+                     </PlayModal>
                   ))}
                </div>
             </div>

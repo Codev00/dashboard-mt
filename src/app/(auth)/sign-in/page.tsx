@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { RootState, useAppDispatch, useAppSelector } from "@/hook/store";
 import { setUser } from "@/hook/global.slice";
+import { getCookie } from "cookies-next";
 
 const SignIn = () => {
    const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const SignIn = () => {
       },
    });
    useEffect(() => {
-      if (isLogin || sessionStorage.getItem("access_token")) {
+      if (isLogin || getCookie("access_token")) {
          setTimeout(() => {
             router.push("/");
          }, 3000);

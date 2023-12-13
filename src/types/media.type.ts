@@ -28,4 +28,5 @@ export type MovieType = {
    status: string;
    genres: GenreType[];
    videos: VideoType[];
+   premium: boolean;
 };

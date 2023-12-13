@@ -77,7 +77,7 @@ const ListMovie = () => {
       setFilterValue("");
    }, []);
    return (
-      <div className="w-full h-[600px] flex gap-6">
+      <div className="w-full h-[600px] flex gap-6  ">
          <Input
             isClearable
             className="w-[300px] sm:max-w-[44%] mb-5"
@@ -93,9 +93,10 @@ const ListMovie = () => {
             radius="none"
             layout="fixed"
             shadow="lg"
+            className="scrollbar-hide"
             classNames={{
-               base: "max-h-[600px] overflow-hidden ",
-               table: "min-h-[300px] ",
+               base: "max-h-[600px] overflow-hidden scrollbar-hide ",
+               table: "min-h-[300px] scrollbar-hide",
             }}
             // bottomContent={
             //    <div className="flex w-full justify-center">

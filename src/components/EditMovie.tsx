@@ -4,11 +4,14 @@ import { GenreType, MovieType } from "@/types/media.type";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import React, { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
 const EditMovie = ({ data }: { data: MovieType }) => {
-   let genreInit = [];
+   let genreInit: string[] = [];
+
    data.genres.map((item) => {
       return genreInit.push(item.title);
    });
+
    const [genres, setGenres] = useState<GenreType[]>([]);
    const [name, setName] = useState<any>(data.name);
    const [genre, setGenre] = useState<any>(data.genres);
@@ -17,10 +20,10 @@ const EditMovie = ({ data }: { data: MovieType }) => {
    const [views, setViews] = useState<any>(data.views);
    const [runtime, setRuntime] = useState<any>(data.runtime);
    const [year, setYear] = useState<any>(data.year);
-   const [status, setStatus] = useState(data.status);
    const [date, setDate] = useState(data.release_date);
    const [overview, setOverview] = useState(data.overview);
    const [direction, setDirection] = useState<any>(data.direction);
+   const [premium, setPremium] = useState(data.premium);
    useEffect(() => {
       (async () => {
          const { res, error } = await genresApi.getList();
@@ -31,7 +34,8 @@ const EditMovie = ({ data }: { data: MovieType }) => {
 
    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const { res, error } = await mediaApi.addMovie({
+      const { res, error } = await mediaApi.editMovie({
+         id: data._id,
          name: name,
          genres: genre,
          backdrop_path: backdrop,
@@ -39,12 +43,12 @@ const EditMovie = ({ data }: { data: MovieType }) => {
          views: views,
          runtime: runtime,
          year: year,
-         status: status,
          release_date: date,
          overview: overview,
          direction: direction,
+         premium: premium,
       });
-      if (res) toast.success("Created new movie success !!!");
+      if (res) toast.success("Movie updated success !!!");
       if (error) toast.error(error?.message);
    };
 
@@ -69,7 +73,7 @@ const EditMovie = ({ data }: { data: MovieType }) => {
                <div className="flex gap-4 w-[500px]">
                   <Select
                      isRequired
-                     defaultSelectedKeys={[genre[0]._id]}
+                     defaultSelectedKeys={genreInit}
                      label="Genres"
                      placeholder="Select an genres"
                      selectionMode="multiple"
@@ -77,7 +81,7 @@ const EditMovie = ({ data }: { data: MovieType }) => {
                      onChange={(e) => setGenre(e.target.value.split(","))}
                   >
                      {genres.map((genre) => (
-                        <SelectItem key={genre._id} value={genre?._id}>
+                        <SelectItem key={genre.title} value={genre?._id}>
                            {genre?.title}
                         </SelectItem>
                      ))}
@@ -144,17 +148,17 @@ const EditMovie = ({ data }: { data: MovieType }) => {
                <div className="w-[500px] flex  gap-4">
                   <Select
                      isRequired
-                     label="Status"
-                     placeholder="Select an Status"
+                     label="Premium"
+                     placeholder="Select an Premium"
                      variant="underlined"
-                     onChange={(e) => setStatus(e.target.value)}
-                     defaultSelectedKeys={status}
+                     onChange={(e) => setPremium(e.target.value === "true")}
+                     defaultSelectedKeys={premium ? ["true"] : ["false"]}
                   >
-                     <SelectItem key={"Release"} value={"Release"}>
-                        Release
+                     <SelectItem key={"true"} value={"true"}>
+                        True
                      </SelectItem>
-                     <SelectItem key={"Commingsoon"} value={"Commingsoon"}>
-                        Commingsoon
+                     <SelectItem key={"false"} value={"false"}>
+                        False
                      </SelectItem>
                   </Select>
 
@@ -183,7 +187,7 @@ const EditMovie = ({ data }: { data: MovieType }) => {
                   radius="full"
                   className="bg-gradient-to-tr mt-5 from-pink-500 to-yellow-500 text-white shadow-lg"
                >
-                  Created
+                  Save
                </Button>
             </form>
          </div>

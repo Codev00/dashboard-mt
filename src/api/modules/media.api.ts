@@ -10,7 +10,7 @@ const mediaApi = {
       views,
       runtime,
       year,
-      status,
+      premium,
       release_date,
       overview,
       direction,
@@ -24,7 +24,40 @@ const mediaApi = {
             views,
             runtime,
             year,
-            status,
+            premium,
+            release_date,
+            overview,
+            direction,
+         });
+         return { res };
+      } catch (error: any) {
+         return { error };
+      }
+   },
+   editMovie: async ({
+      id,
+      name,
+      genres,
+      backdrop_path,
+      poster_path,
+      views,
+      runtime,
+      year,
+      premium,
+      release_date,
+      overview,
+      direction,
+   }: any) => {
+      try {
+         const res = await publicClient.put(`/movie/edited/${id}`, {
+            name,
+            genres,
+            backdrop_path,
+            poster_path,
+            views,
+            runtime,
+            year,
+            premium,
             release_date,
             overview,
             direction,
