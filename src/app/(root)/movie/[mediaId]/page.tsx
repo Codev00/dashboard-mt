@@ -76,7 +76,7 @@ const Detail = () => {
                <h1 className="text-xl font-bold">Video</h1>
                <div className="flex gap-5 flex-nowrap  ">
                   {movie?.videos.map((video: any, index: number) => (
-                     <PlayModal link={video?.key}>
+                     <PlayModal link={video?.key} key={index}>
                         <Image
                            key={index}
                            src={tmdbConfig.youtubeImg(video?.key)}
