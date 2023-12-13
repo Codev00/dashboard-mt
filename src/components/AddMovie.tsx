@@ -14,10 +14,10 @@ const AddMovie = () => {
    const [views, setViews] = useState(0);
    const [runtime, setRuntime] = useState(0);
    const [year, setYear] = useState(0);
-   const [status, setStatus] = useState("");
    const [date, setDate] = useState("");
    const [overview, setOverview] = useState("");
    const [direction, setDirection] = useState<any>([]);
+   const [premium, setPremium] = useState(false);
    useEffect(() => {
       (async () => {
          const { res, error } = await genresApi.getList();
@@ -36,10 +36,10 @@ const AddMovie = () => {
          views: views,
          runtime: runtime,
          year: year,
-         status: status,
          release_date: date,
          overview: overview,
          direction: direction,
+         premium: premium,
       });
       if (res) toast.success("Created new movie success !!!");
       if (error) toast.error(error?.message);
@@ -133,16 +133,17 @@ const AddMovie = () => {
                <div className="w-[500px] flex  gap-4">
                   <Select
                      isRequired
-                     label="Status"
-                     placeholder="Select an Status"
+                     label="Premium"
+                     placeholder="Select an Premium"
                      variant="underlined"
-                     onChange={(e) => setStatus(e.target.value)}
+                     onChange={(e) => setPremium(e.target.value === "true")}
+                     defaultSelectedKeys={premium ? ["true"] : ["false"]}
                   >
-                     <SelectItem key={"Release"} value={"Release"}>
-                        Release
+                     <SelectItem key={"true"} value={"true"}>
+                        True
                      </SelectItem>
-                     <SelectItem key={"Commingsoon"} value={"Commingsoon"}>
-                        Commingsoon
+                     <SelectItem key={"false"} value={"false"}>
+                        False
                      </SelectItem>
                   </Select>
 
