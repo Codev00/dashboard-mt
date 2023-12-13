@@ -1,5 +1,6 @@
 import { MovieType } from "@/types/media.type";
 import publicClient from "../config/public.client";
+import privateClient from "../config/private.client";
 
 const mediaApi = {
    addMovie: async ({
@@ -16,7 +17,7 @@ const mediaApi = {
       direction,
    }: any) => {
       try {
-         const res = await publicClient.post("/api/v1/movie/created", {
+         const res = await privateClient.post("/api/v1/movie/created", {
             name,
             genres,
             backdrop_path,
@@ -49,7 +50,7 @@ const mediaApi = {
       direction,
    }: any) => {
       try {
-         const res = await publicClient.put(`/api/v1/movie/edited/${id}`, {
+         const res = await privateClient.put(`/api/v1/movie/edited/${id}`, {
             name,
             genres,
             backdrop_path,
@@ -89,7 +90,7 @@ const mediaApi = {
    },
    AcceptMovie: async ({ id }: { id: string | string[] }) => {
       try {
-         const res = await publicClient.put(`/movie/censorship/${id}`, {
+         const res = await publicClient.put(`/api/v1/movie/censorship/${id}`, {
             censorship: true,
          });
          return { res };
